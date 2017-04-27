@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
 # 1
 s.platform = :ios
-s.ios.deployment_target = '8.0'
+s.ios.deployment_target = '9.0'
 s.name = "JNDropDownMenu"
 s.summary = "JNDropDownMenu lets a user to add dropdown tableview menu"
 s.requires_arc = true
@@ -28,6 +28,4 @@ s.framework = "UIKit"
 # 8
 s.source_files = "JNDropDownMenu/**/*.{swift}"
 
-# 9
-s.resources = "JNDropDownMenu/**/*.{png,jpeg,jpg,storyboard,xib}"
 end

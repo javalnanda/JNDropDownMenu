@@ -8,9 +8,9 @@
 
 import UIKit
 
-struct JNIndexPath {
-    var column = 0
-    var row = 0
+public struct JNIndexPath {
+    public var column = 0
+    public var row = 0
     
     init(column: NSInteger, row: NSInteger) {
         self.column = column
@@ -18,7 +18,7 @@ struct JNIndexPath {
     }
 }
 
-protocol JNDropDownMenuDataSource: class {
+public protocol JNDropDownMenuDataSource: class {
     
     func numberOfRows(inColumn: NSInteger, forMenu: JNDropDownMenu) -> Int
     func titleForRow(atIndexPath: JNIndexPath, forMenu: JNDropDownMenu) -> String
@@ -31,11 +31,11 @@ extension JNDropDownMenuDataSource {
     }
 }
 
-protocol JNDropDownMenuDelegate: class {
+public protocol JNDropDownMenuDelegate: class {
     func didSelectRow(atIndexPath: JNIndexPath, forMenu: JNDropDownMenu)
 }
 
-class JNDropDownMenu: UIView{
+public class JNDropDownMenu: UIView{
 
     var origin = CGPoint(x: 0, y: 0)
     var currentSelectedMenuIndex = -1
@@ -54,51 +54,55 @@ class JNDropDownMenu: UIView{
     var indicators:[CAShapeLayer] = [];
     var bgLayers:[CALayer] = [];
     
-    var textColor = UIColor.black
-    var indicatorColor = UIColor.black
+    //
+    open var textColor = UIColor.black
+    open var arrowColor = UIColor.black
+    open var cellBgColor = UIColor.white
+    open var cellSelectionColor = UIColor.init(white: 0.9, alpha: 1.0)
+    open var textFont = UIFont.systemFont(ofSize: CGFloat(14.0))
     
-    weak var datasource: JNDropDownMenuDataSource? {
+    open weak var datasource: JNDropDownMenuDataSource? {
         didSet {
-            
             //configure view
-            
             self.numOfMenu = (datasource?.numberOfColumns(inMenu: self))!
-            
-            let textLayerInterval = self.frame.size.width / CGFloat(( self.numOfMenu * 2));
-            let bgLayerInterval = self.frame.size.width / CGFloat(self.numOfMenu);
-            
-            var tempTitles:[CATextLayer] = []
-            var tempIndicators:[CAShapeLayer] = []
-            var tempBgLayers:[CALayer] = []
-            
-            for i in 0..<self.numOfMenu {
-                
-                //bgLayer
-                let bgLayerPosition = CGPoint(x: (Double(i)+0.5) * Double(bgLayerInterval), y: Double(self.frame.size.height/2));
-                let bgLayer = self.createBgLayer(color: UIColor.white, position: bgLayerPosition)
-                self.layer.addSublayer(bgLayer)
-                tempBgLayers.append(bgLayer)
-                
-                //title
-                let titlePosition = CGPoint(x: Double((i * 2 + 1)) * Double(textLayerInterval), y: Double(self.frame.size.height / 2))
-                let titleString = datasource?.titleForRow(atIndexPath: JNIndexPath(column: i, row: 0), forMenu: self)
-                let title = self.createTextLayer(string: titleString!, color: self.textColor, point: titlePosition)
-                self.layer.addSublayer(title)
-                tempTitles.append(title)
-                
-                //indicator
-                let indicator = self.createIndicator(color: self.indicatorColor, point: CGPoint(x: titlePosition.x + title.bounds.size.width / 2 + 8, y: self.frame.size.height / 2))
-                self.layer.addSublayer(indicator)
-                tempIndicators.append(indicator)
-            }
-            titles = tempTitles
-            indicators = tempIndicators
-            bgLayers = tempBgLayers
-
+            setUpUI()
         }
     }
     
-    weak var delegate: JNDropDownMenuDelegate?
+    open weak var delegate: JNDropDownMenuDelegate?
+    
+    func setUpUI() {
+        let textLayerInterval = self.frame.size.width / CGFloat(( self.numOfMenu * 2));
+        let bgLayerInterval = self.frame.size.width / CGFloat(self.numOfMenu);
+        
+        var tempTitles:[CATextLayer] = []
+        var tempIndicators:[CAShapeLayer] = []
+        var tempBgLayers:[CALayer] = []
+        
+        for i in 0..<self.numOfMenu {
+            
+            //bgLayer
+            let bgLayerPosition = CGPoint(x: (Double(i)+0.5) * Double(bgLayerInterval), y: Double(self.frame.size.height/2));
+            let bgLayer = self.createBgLayer(color: cellBgColor, position: bgLayerPosition)
+            self.layer.addSublayer(bgLayer)
+            tempBgLayers.append(bgLayer)
+            
+            //title
+            let titlePosition = CGPoint(x: Double((i * 2 + 1)) * Double(textLayerInterval), y: Double(self.frame.size.height / 2))
+            let titleString = datasource?.titleForRow(atIndexPath: JNIndexPath(column: i, row: 0), forMenu: self)
+            let title = self.createTextLayer(string: titleString!, color: self.textColor, point: titlePosition)
+            self.layer.addSublayer(title)
+            tempTitles.append(title)
+            
+            //indicator
+            let indicator = self.createIndicator(color: self.arrowColor, point: CGPoint(x: titlePosition.x + title.bounds.size.width / 2 + 8, y: self.frame.size.height / 2))
+            self.layer.addSublayer(indicator)
+            tempIndicators.append(indicator)
+        }
+        titles = tempTitles
+        indicators = tempIndicators
+        bgLayers = tempBgLayers
+    }
     
     /*
     // Only override draw() if you perform custom drawing.
@@ -107,7 +111,7 @@ class JNDropDownMenu: UIView{
         // Drawing code
     }
     */
-    init(origin: CGPoint, height: CGFloat) {
+    public init(origin: CGPoint, height: CGFloat) {
     
         let screenSize = UIScreen.main.bounds.size
         super.init(frame: CGRect(origin: CGPoint(x: origin.x,y :origin.y), size: CGSize(width: screenSize.width, height: height)))
@@ -143,7 +147,7 @@ class JNDropDownMenu: UIView{
         self.addSubview(bottomShadow)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -186,7 +190,7 @@ class JNDropDownMenu: UIView{
         let sizeWidth = (size.width < (self.frame.size.width / CGFloat(self.numOfMenu)) - 25) ? size.width : self.frame.size.width / CGFloat(self.numOfMenu) - 25;
         layer.bounds = CGRect(origin: CGPoint(x: 0,y: 0), size: CGSize(width: sizeWidth, height: size.height))
         layer.string = string;
-        layer.fontSize = 14.0;
+        layer.fontSize = textFont.pointSize;
         layer.alignmentMode = kCAAlignmentCenter;
         layer.foregroundColor = color.cgColor;
         layer.contentsScale = UIScreen.main.scale
@@ -196,8 +200,7 @@ class JNDropDownMenu: UIView{
     }
     
     func calculateTitleSizeWith(string: String) -> CGSize {
-        let fontSize = 14.0;
-        let dict = [NSFontAttributeName: UIFont.systemFont(ofSize: CGFloat(fontSize))]
+        let dict = [NSFontAttributeName: textFont]
         let constraintRect = CGSize(width: 280, height: 0)
         let rect = string.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: dict, context: nil)
         return rect.size;
@@ -222,7 +225,7 @@ extension JNDropDownMenu {
                     })
                 })
                 
-                self.bgLayers[i].backgroundColor = UIColor.white.cgColor
+                self.bgLayers[i].backgroundColor = cellBgColor.cgColor
             }
         }
         
@@ -231,7 +234,7 @@ extension JNDropDownMenu {
                 self.currentSelectedMenuIndex = tapIndex
                 self.show = false
             })
-            self.bgLayers[tapIndex].backgroundColor = UIColor.white.cgColor
+            self.bgLayers[tapIndex].backgroundColor = cellBgColor.cgColor
             
         } else {
             self.currentSelectedMenuIndex = tapIndex;
@@ -239,7 +242,7 @@ extension JNDropDownMenu {
             self.animate(indicator: indicators[tapIndex], background: self.backGroundView, tableView: self.tableView, title: titles[tapIndex], forward: true, completion: { _ in
                 self.show = true
             })
-            self.bgLayers[tapIndex].backgroundColor = UIColor.init(white: 0.9, alpha: 1.0).cgColor
+            self.bgLayers[tapIndex].backgroundColor = cellSelectionColor.cgColor
         }
 
     }
@@ -248,7 +251,7 @@ extension JNDropDownMenu {
         self.animate(indicator: indicators[currentSelectedMenuIndex], background: self.backGroundView, tableView: self.tableView, title: titles[self.currentSelectedMenuIndex], forward: false) { _ in
             self.show = false
         }
-        self.bgLayers[self.currentSelectedMenuIndex].backgroundColor = UIColor.white.cgColor
+        self.bgLayers[self.currentSelectedMenuIndex].backgroundColor = cellBgColor.cgColor
     }
     
 }
@@ -337,13 +340,13 @@ extension JNDropDownMenu {
 // TableView DataSource - Delegate
 extension JNDropDownMenu: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         assert(self.datasource != nil, "menu's dataSource shouldn't be nil");
         
         return (self.datasource?.numberOfRows(inColumn: self.currentSelectedMenuIndex, forMenu: self))!
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = "DropDownMenuCell"
         var cell = tableView.dequeueReusableCell(withIdentifier: identifier)
         if cell == nil {
@@ -354,20 +357,20 @@ extension JNDropDownMenu: UITableViewDataSource, UITableViewDelegate {
         
         cell?.textLabel?.text = self.datasource?.titleForRow(atIndexPath: JNIndexPath(column: self.currentSelectedMenuIndex, row: indexPath.row), forMenu: self)
         
-        cell?.backgroundColor = UIColor.white
-        cell?.textLabel?.font = UIFont.systemFont(ofSize: 14.0, weight: UIFontWeightLight)
+        cell?.backgroundColor = cellBgColor
+        cell?.textLabel?.font = textFont
         
         cell?.separatorInset = UIEdgeInsets.zero;
         
         if (cell?.textLabel?.text)! == self.titles[self.currentSelectedMenuIndex].string as! String {
-            cell?.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+            cell?.backgroundColor = cellSelectionColor
         }
         
         return cell!;
     }
     
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.confiMenuWith(row: indexPath.row)
         self.delegate?.didSelectRow(atIndexPath: JNIndexPath(column: self.currentSelectedMenuIndex, row: indexPath.row), forMenu: self)
     }
@@ -380,14 +383,14 @@ extension JNDropDownMenu: UITableViewDataSource, UITableViewDelegate {
             self.show = false
         }
         
-        self.bgLayers[self.currentSelectedMenuIndex].backgroundColor = UIColor.white.cgColor
+        self.bgLayers[self.currentSelectedMenuIndex].backgroundColor = cellBgColor.cgColor
         
         
         let indicator = self.indicators[self.currentSelectedMenuIndex]
         indicator.position = CGPoint(x: title.position.x + title.frame.size.width / 2 + 8, y: indicator.position.y)
     }
     
-    func dismiss() {
+    open func dismiss() {
         self.backgroundTapped(paramSender: nil)
     }
     
