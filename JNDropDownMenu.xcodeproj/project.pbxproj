@@ -111,6 +111,7 @@
 				9C46C27C1EB1E0E30079F1D4 /* Frameworks */,
 				9C46C27D1EB1E0E30079F1D4 /* Headers */,
 				9C46C27E1EB1E0E30079F1D4 /* Resources */,
+				9C46C29C1EB21D800079F1D4 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -194,6 +195,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9C46C29C1EB21D800079F1D4 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9C46C27B1EB1E0E30079F1D4 /* Sources */ = {
@@ -406,6 +424,7 @@
 				9C46C2961EB1E0E30079F1D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9C46C2971EB1E0E30079F1D4 /* Build configuration list for PBXNativeTarget "JNDropDownMenuTests" */ = {
 			isa = XCConfigurationList;
@@ -414,6 +433,7 @@
 				9C46C2991EB1E0E30079F1D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
