@@ -18,19 +18,19 @@ public struct JNIndexPath {
 }
 
 public protocol JNDropDownMenuDataSource: class {
-    func numberOfRows(inColumn: NSInteger, forMenu: JNDropDownMenu) -> Int
-    func titleForRow(atIndexPath: JNIndexPath, forMenu: JNDropDownMenu) -> String
-    func numberOfColumns(inMenu: JNDropDownMenu) -> NSInteger
+    func numberOfRows(in column: NSInteger, for menu: JNDropDownMenu) -> Int
+    func titleForRow(at indexPath: JNIndexPath, for menu: JNDropDownMenu) -> String
+    func numberOfColumns(in menu: JNDropDownMenu) -> NSInteger
 }
 
 extension JNDropDownMenuDataSource {
-    func numberOfColumns(inMenu: JNDropDownMenu) -> NSInteger {
+    func numberOfColumns(in menu: JNDropDownMenu) -> NSInteger {
         return 1
     }
 }
 
 public protocol JNDropDownMenuDelegate: class {
-    func didSelectRow(atIndexPath: JNIndexPath, forMenu: JNDropDownMenu)
+    func didSelectRow(at indexPath: JNIndexPath, for menu: JNDropDownMenu)
 }
 
 public class JNDropDownMenu: UIView {
@@ -56,7 +56,7 @@ public class JNDropDownMenu: UIView {
     open weak var datasource: JNDropDownMenuDataSource? {
         didSet {
             //configure view
-            self.numOfMenu = (datasource?.numberOfColumns(inMenu: self))!
+            self.numOfMenu = (datasource?.numberOfColumns(in: self))!
             setUpUI()
         }
     }
@@ -78,7 +78,7 @@ public class JNDropDownMenu: UIView {
             //title
             let titlePosition = CGPoint(x: Double((i * 2 + 1)) * Double(textLayerInterval),
                                         y: Double(self.frame.size.height / 2))
-            let titleString = datasource?.titleForRow(atIndexPath: JNIndexPath(column: i, row: 0), forMenu: self)
+            let titleString = datasource?.titleForRow(at: JNIndexPath(column: i, row: 0), for: self)
             let title = self.createTextLayer(string: titleString!, color: self.textColor, point: titlePosition)
             self.layer.addSublayer(title)
             tempTitles.append(title)
@@ -321,7 +321,7 @@ extension JNDropDownMenu: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         assert(self.datasource != nil, "menu's dataSource shouldn't be nil")
 
-        return (self.datasource?.numberOfRows(inColumn: self.currentSelectedMenuIndex, forMenu: self))!
+        return (self.datasource?.numberOfRows(in: self.currentSelectedMenuIndex, for: self))!
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -333,7 +333,7 @@ extension JNDropDownMenu: UITableViewDataSource, UITableViewDelegate {
 
         assert(self.datasource != nil, "menu's datasource shouldn't be nil")
 
-        cell?.textLabel?.text = self.datasource?.titleForRow(atIndexPath: JNIndexPath(column: self.currentSelectedMenuIndex, row: indexPath.row), forMenu: self)
+        cell?.textLabel?.text = self.datasource?.titleForRow(at: JNIndexPath(column: self.currentSelectedMenuIndex, row: indexPath.row), for: self)
 
         cell?.backgroundColor = cellBgColor
         cell?.textLabel?.font = textFont
@@ -349,12 +349,12 @@ extension JNDropDownMenu: UITableViewDataSource, UITableViewDelegate {
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.confiMenuWith(row: indexPath.row)
-        self.delegate?.didSelectRow(atIndexPath: JNIndexPath(column: self.currentSelectedMenuIndex, row: indexPath.row), forMenu: self)
+        self.delegate?.didSelectRow(at: JNIndexPath(column: self.currentSelectedMenuIndex, row: indexPath.row), for: self)
     }
 
     func confiMenuWith(row: NSInteger) {
         let title = self.titles[self.currentSelectedMenuIndex]
-        title.string = self.datasource?.titleForRow(atIndexPath: JNIndexPath(column: self.currentSelectedMenuIndex, row: row), forMenu: self)
+        title.string = self.datasource?.titleForRow(at: JNIndexPath(column: self.currentSelectedMenuIndex, row: row), for: self)
 
         self.animate(indicator: indicators[self.currentSelectedMenuIndex], background: self.backGroundView, tableView: self.tableView, title: titles[self.currentSelectedMenuIndex], forward: false) { _ in
             self.show = false
