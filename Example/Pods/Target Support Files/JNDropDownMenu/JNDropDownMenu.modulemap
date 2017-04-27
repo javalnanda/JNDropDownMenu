@@ -1,0 +1,6 @@
+framework module JNDropDownMenu {
+  umbrella header "JNDropDownMenu-umbrella.h"
+
+  export *
+  module * { export * }
+}
