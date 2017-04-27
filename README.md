@@ -6,7 +6,7 @@ Easy to use TableView style dropdown menu.
 ![image](https://github.com/javalnanda/JNDropDownMenu/blob/master/Example/JNDropDownSample/demo.gif)
 
 ## Setup
-The only you thing you need to do is import `JNDropDownMenu`, create an instance and add it to your `View` and conform to its datasource and delegate.
+The only thing you need to do is import `JNDropDownMenu`, create an instance and add it to your `View` and conform to its datasource and delegate.
 ```swift
 import JNDropDownMenu
 ```
