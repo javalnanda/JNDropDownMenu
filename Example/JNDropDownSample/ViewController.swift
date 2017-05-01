@@ -11,15 +11,16 @@ import JNDropDownMenu
 class ViewController: UIViewController {
 
     
-    var columnOneArray = ["All","C1-1","C1-2","C1-3","C1-4"]
+    var columnOneArray = ["All","C1-1","C1-2","C1-3","C1-4","C1-5"]
     var columnTwoArray = ["All","C2-1","C2-2"]
     
     @IBOutlet weak var label: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "JNDropDownMenu" 
-        let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 40)
+        self.title = "JNDropDownMenu"
+        // pass custom width or set as nil to use screen width
+        let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 40, width: self.view.frame.size.width)
         /*
         // Customize if required
         menu.textColor = UIColor.red
