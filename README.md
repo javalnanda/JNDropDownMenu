@@ -65,14 +65,11 @@ extension ViewController: JNDropDownMenuDelegate, JNDropDownMenuDataSource {
     }
 }
 ```
-
-Menu width will default to that of screensize.
-
 Customization:
 There are very minimal customization available currently. You can alter color and font before setting menu datasource as follow:
 
 ```swift
-    let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 40)
+    let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 40, width: self.view.frame.size.width)
     //customize
     menu.textColor = UIColor.red
     menu.cellBgColor = UIColor.green
