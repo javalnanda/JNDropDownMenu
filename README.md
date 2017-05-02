@@ -11,7 +11,8 @@ The only thing you need to do is import `JNDropDownMenu`, create an instance and
 import JNDropDownMenu
 ```
 ```swift
-let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 40)
+// pass origin of menu, height - this will be height of collapsed menu not the expanded menu, width - it is optional, pass custom width or pass nil to utilize screen width
+let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 40, width: self.view.frame.size.width)
         menu.datasource = self
         menu.delegate = self
         self.view.addSubview(menu)
@@ -96,6 +97,10 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod "JNDropDownMenu"
 ```
+## Change Log
+V 0.1.4
+- added support to pass custom width for menu
+- expand menu now utilize entire screen height instead of 5 rows.
 
 ## Suggestions or feedback?
 
