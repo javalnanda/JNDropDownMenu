@@ -100,10 +100,10 @@ public class JNDropDownMenu: UIView {
         // Drawing code
     }
     */
-    public init(origin: CGPoint, height: CGFloat) {
+    public init(origin: CGPoint, height: CGFloat, width: CGFloat?) {
         let screenSize = UIScreen.main.bounds.size
         super.init(frame: CGRect(origin: CGPoint(x: origin.x, y :origin.y),
-                                 size: CGSize(width: screenSize.width, height: height)))
+                                 size: CGSize(width: width ?? screenSize.width, height: height)))
         self.origin = origin
         self.currentSelectedMenuIndex = -1
         self.show = false
@@ -120,14 +120,14 @@ public class JNDropDownMenu: UIView {
         self.addGestureRecognizer(tapGesture)
         //background init and tapped
         self.backGroundView = UIView.init(frame: CGRect(origin: CGPoint(x: origin.x, y :origin.y),
-                                size: CGSize(width: screenSize.width, height: screenSize.height)))
+                                size: CGSize(width: width ?? screenSize.width, height: screenSize.height)))
         self.backGroundView.backgroundColor = UIColor.init(white: 0.0, alpha: 0.0)
         self.backGroundView.isOpaque = false
         let bgTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.backgroundTapped(paramSender:)))
         self.backGroundView.addGestureRecognizer(bgTapGesture)
         //add bottom shadow
         let bottomShadow = UIView.init(frame: CGRect(origin: CGPoint(x: 0, y :self.frame.size.height-0.5),
-                                        size: CGSize(width: screenSize.width, height: 0.5)))
+                                        size: CGSize(width: width ?? screenSize.width, height: 0.5)))
         bottomShadow.backgroundColor = UIColor.lightGray
         self.addSubview(bottomShadow)
     }
@@ -272,7 +272,7 @@ extension JNDropDownMenu {
 
             self.superview?.addSubview(tableView)
 
-            let tableViewHeight = (tableView.numberOfRows(inSection: 0) > 5) ? (5 * tableView.rowHeight) : (CGFloat(tableView.numberOfRows(inSection: 0)) * tableView.rowHeight)
+            let tableViewHeight = (CGFloat(tableView.numberOfRows(inSection: 0)) * tableView.rowHeight) < UIScreen.main.bounds.height-(self.origin.y+100) ? (CGFloat(tableView.numberOfRows(inSection: 0)) * tableView.rowHeight) : UIScreen.main.bounds.height-(self.origin.y+100)
 
             UIView.animate(withDuration: 0.2, animations: {
                 self.tableView.frame = CGRect(origin: CGPoint(x: self.origin.x, y: self.frame.origin.y + self.frame.size.height), size: CGSize(
