@@ -1,0 +1,5 @@
+language: swift
+osx_image: xcode8.3.2
+xcode_project: JNDropDownMenu.xcodeproj
+xcode_scheme: JNDropDownMenu
+xcode_sdk: iphonesimulator10.3
