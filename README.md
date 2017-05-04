@@ -1,4 +1,13 @@
 # JNDropDownMenu
+
+[![CI Status](http://img.shields.io/travis/javalnanda/JNDropDownMenu.svg?style=flat)](https://travis-ci.org/javalnanda/JNDropDownMenu)
+[![Version](https://img.shields.io/cocoapods/v/JNDropDownMenu.svg?style=flat)](http://cocoapods.org/pods/JNDropDownMenu)
+[![License](https://img.shields.io/cocoapods/l/JNDropDownMenu.svg?style=flat)](http://cocoapods.org/pods/JNDropDownMenu)
+[![Platform](https://img.shields.io/cocoapods/p/JNDropDownMenu.svg?style=flat)](http://cocoapods.org/pods/JNDropDownMenu)
+[![Twitter: @javalnanda](https://img.shields.io/badge/contact-@javalnanda-blue.svg?style=flat)](https://twitter.com/javalnanda)
+
+## Overview
+
 Swift version of https://github.com/dopcn/DOPDropDownMenu
 
 Easy to use TableView style dropdown menu.
