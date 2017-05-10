@@ -28,7 +28,9 @@ class ViewController: UIViewController {
         menu.arrowColor = UIColor.black
         menu.cellSelectionColor = UIColor.white
         menu.textFont = UIFont.boldSystemFont(ofSize: 16.0)
+        menu.updateColumnTitleOnSelection = false
         */
+        
         menu.datasource = self
         menu.delegate = self
         self.view.addSubview(menu)
@@ -46,6 +48,11 @@ extension ViewController: JNDropDownMenuDelegate, JNDropDownMenuDataSource {
     func numberOfColumns(in menu: JNDropDownMenu) -> NSInteger {
         return 2
     }
+    
+    /* Override this method if you want to provide custom column title other than the first object of column array
+    func titleFor(column: Int, menu: JNDropDownMenu) -> String {
+        return "Column \(column)"
+    }*/
     
     func numberOfRows(in column: NSInteger, for forMenu: JNDropDownMenu) -> Int {
         switch column {

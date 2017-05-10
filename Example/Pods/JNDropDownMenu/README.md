@@ -1,4 +1,13 @@
 # JNDropDownMenu
+
+[![CI Status](http://img.shields.io/travis/javalnanda/JNDropDownMenu.svg?style=flat)](https://travis-ci.org/javalnanda/JNDropDownMenu)
+[![Version](https://img.shields.io/cocoapods/v/JNDropDownMenu.svg?style=flat)](http://cocoapods.org/pods/JNDropDownMenu)
+[![License](https://img.shields.io/cocoapods/l/JNDropDownMenu.svg?style=flat)](http://cocoapods.org/pods/JNDropDownMenu)
+[![Platform](https://img.shields.io/cocoapods/p/JNDropDownMenu.svg?style=flat)](http://cocoapods.org/pods/JNDropDownMenu)
+[![Twitter: @javalnanda](https://img.shields.io/badge/contact-@javalnanda-blue.svg?style=flat)](https://twitter.com/javalnanda)
+
+## Overview
+
 Swift version of https://github.com/dopcn/DOPDropDownMenu
 
 Easy to use TableView style dropdown menu.
@@ -11,7 +20,8 @@ The only thing you need to do is import `JNDropDownMenu`, create an instance and
 import JNDropDownMenu
 ```
 ```swift
-let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 40)
+// pass origin of menu, height - this will be height of collapsed menu not the expanded menu, width - it is optional, pass custom width or pass nil to utilize screen width
+let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 40, width: self.view.frame.size.width)
         menu.datasource = self
         menu.delegate = self
         self.view.addSubview(menu)
@@ -64,14 +74,11 @@ extension ViewController: JNDropDownMenuDelegate, JNDropDownMenuDataSource {
     }
 }
 ```
-
-Menu width will default to that of screensize.
-
 Customization:
 There are very minimal customization available currently. You can alter color and font before setting menu datasource as follow:
 
 ```swift
-    let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 40)
+    let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 40, width: self.view.frame.size.width)
     //customize
     menu.textColor = UIColor.red
     menu.cellBgColor = UIColor.green
@@ -96,6 +103,10 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod "JNDropDownMenu"
 ```
+## Change Log
+V 0.1.4
+- added support to pass custom width for menu
+- expand menu now utilize entire screen height instead of 5 rows.
 
 ## Suggestions or feedback?
 

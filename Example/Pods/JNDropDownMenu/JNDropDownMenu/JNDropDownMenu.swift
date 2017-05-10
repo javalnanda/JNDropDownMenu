@@ -21,11 +21,16 @@ public protocol JNDropDownMenuDataSource: class {
     func numberOfRows(in column: NSInteger, for menu: JNDropDownMenu) -> Int
     func titleForRow(at indexPath: JNIndexPath, for menu: JNDropDownMenu) -> String
     func numberOfColumns(in menu: JNDropDownMenu) -> NSInteger
+    func titleFor(column: Int, menu: JNDropDownMenu) -> String
 }
 
-extension JNDropDownMenuDataSource {
+public extension JNDropDownMenuDataSource {
     func numberOfColumns(in menu: JNDropDownMenu) -> NSInteger {
         return 1
+    }
+    
+    func titleFor(column: Int, menu: JNDropDownMenu) -> String {
+        return menu.datasource?.titleForRow(at: JNIndexPath(column: column, row: 0), for: menu) ?? ""
     }
 }
 
@@ -53,6 +58,7 @@ public class JNDropDownMenu: UIView {
     open var cellBgColor = UIColor.white
     open var cellSelectionColor = UIColor.init(white: 0.9, alpha: 1.0)
     open var textFont = UIFont.systemFont(ofSize: CGFloat(14.0))
+    open var updateColumnTitleOnSelection = true
     open weak var datasource: JNDropDownMenuDataSource? {
         didSet {
             //configure view
@@ -78,7 +84,7 @@ public class JNDropDownMenu: UIView {
             //title
             let titlePosition = CGPoint(x: Double((i * 2 + 1)) * Double(textLayerInterval),
                                         y: Double(self.frame.size.height / 2))
-            let titleString = datasource?.titleForRow(at: JNIndexPath(column: i, row: 0), for: self)
+            let titleString = self.datasource?.titleFor(column: i, menu: self)
             let title = self.createTextLayer(string: titleString!, color: self.textColor, point: titlePosition)
             self.layer.addSublayer(title)
             tempTitles.append(title)
@@ -354,14 +360,13 @@ extension JNDropDownMenu: UITableViewDataSource, UITableViewDelegate {
 
     func confiMenuWith(row: NSInteger) {
         let title = self.titles[self.currentSelectedMenuIndex]
-        title.string = self.datasource?.titleForRow(at: JNIndexPath(column: self.currentSelectedMenuIndex, row: row), for: self)
-
+        if updateColumnTitleOnSelection {
+            title.string = self.datasource?.titleForRow(at: JNIndexPath(column: self.currentSelectedMenuIndex, row: row), for: self)
+        }
         self.animate(indicator: indicators[self.currentSelectedMenuIndex], background: self.backGroundView, tableView: self.tableView, title: titles[self.currentSelectedMenuIndex], forward: false) { _ in
             self.show = false
         }
-
         self.bgLayers[self.currentSelectedMenuIndex].backgroundColor = cellBgColor.cgColor
-
         let indicator = self.indicators[self.currentSelectedMenuIndex]
         indicator.position = CGPoint(x: title.position.x + title.frame.size.width / 2 + 8, y: indicator.position.y)
     }

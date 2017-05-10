@@ -1,11 +1,11 @@
 PODS:
-  - JNDropDownMenu (0.1.4)
+  - JNDropDownMenu (0.1.5)
 
 DEPENDENCIES:
   - JNDropDownMenu
 
 SPEC CHECKSUMS:
-  JNDropDownMenu: 6eaf684f1528ffed9317b813bf719abaed15a22b
+  JNDropDownMenu: 63df8a7c4528e028567c81329b323944ad7bf5bf
 
 PODFILE CHECKSUM: d7233932767238163e981cf675ebcf7026a6f3eb
 
