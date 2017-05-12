@@ -74,7 +74,7 @@ extension ViewController: JNDropDownMenuDelegate, JNDropDownMenuDataSource {
     }
 }
 ```
-Customization:
+## Customization
 There are very minimal customization available currently. You can alter color and font before setting menu datasource as follow:
 
 ```swift
@@ -85,7 +85,9 @@ There are very minimal customization available currently. You can alter color an
     menu.arrowColor = UIColor.black
     menu.cellSelectionColor = UIColor.white
     menu.textFont = UIFont.boldSystemFont(ofSize: 15.0)
-    
+    menu.updateColumnTitleOnSelection = false // Override titleFor(column: Int, menu: JNDropDownMenu) if you are setting this to false
+    menu.arrowPostion = .Left
+
     menu.datasource = self
     menu.delegate = self
     self.view.addSubview(menu)
