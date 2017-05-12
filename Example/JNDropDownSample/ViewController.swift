@@ -21,6 +21,7 @@ class ViewController: UIViewController {
         self.title = "JNDropDownMenu"
         // pass custom width or set as nil to use screen width
         let menu = JNDropDownMenu(origin: CGPoint(x: 0, y: 64), height: 40, width: self.view.frame.size.width)
+        
         /*
         // Customize if required
         menu.textColor = UIColor.red
@@ -29,6 +30,7 @@ class ViewController: UIViewController {
         menu.cellSelectionColor = UIColor.white
         menu.textFont = UIFont.boldSystemFont(ofSize: 16.0)
         menu.updateColumnTitleOnSelection = false
+        menu.arrowPostion = .Left
         */
         
         menu.datasource = self

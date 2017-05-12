@@ -124,6 +124,14 @@ func titleFor(column: Int, menu: JNDropDownMenu) -> String {
 ```
 Note: If you don't override this, by default it will pick first object of column array as a column title and by default it will update the title of column on row selection.
 
+V 0.1.6
+- added support to define arrow position to left or right. Default is right.
+
+Usage
+```swift
+menu.arrowPostion = .Left
+```
+
 ## Suggestions or feedback?
 
 Feel free to create a pull request, open an issue or find me [on Twitter](https://twitter.com/javalnanda).

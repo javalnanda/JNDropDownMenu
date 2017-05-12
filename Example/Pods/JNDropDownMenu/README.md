@@ -108,6 +108,22 @@ V 0.1.4
 - added support to pass custom width for menu
 - expand menu now utilize entire screen height instead of 5 rows.
 
+V 0.1.5
+- added support to provide custom column title and disable change of title on row selection.
+
+Set updateColumnTitleOnSelection flag to false. This will disable change of column title on row selection. 
+Note: This will also disable highlight of last selected row item.
+```swift
+ menu.updateColumnTitleOnSelection = false
+ ```
+Override following function of JNDropDownMenuDataSource to provide custom title for column
+```swift
+func titleFor(column: Int, menu: JNDropDownMenu) -> String {
+        return "Column \(column)"
+    }
+```
+Note: If you don't override this, by default it will pick first object of column array as a column title and by default it will update the title of column on row selection.
+
 ## Suggestions or feedback?
 
 Feel free to create a pull request, open an issue or find me [on Twitter](https://twitter.com/javalnanda).
