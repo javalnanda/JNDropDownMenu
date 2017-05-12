@@ -8,6 +8,11 @@
 
 import UIKit
 
+public enum ArrowPosition: String {
+    case Left
+    case Right
+}
+
 public struct JNIndexPath {
     public var column = 0
     public var row = 0
@@ -59,6 +64,7 @@ public class JNDropDownMenu: UIView {
     open var cellSelectionColor = UIColor.init(white: 0.9, alpha: 1.0)
     open var textFont = UIFont.systemFont(ofSize: CGFloat(14.0))
     open var updateColumnTitleOnSelection = true
+    open var arrowPostion: ArrowPosition = .Right
     open weak var datasource: JNDropDownMenuDataSource? {
         didSet {
             //configure view
@@ -81,6 +87,7 @@ public class JNDropDownMenu: UIView {
             let bgLayer = self.createBgLayer(color: cellBgColor, position: bgLayerPosition)
             self.layer.addSublayer(bgLayer)
             tempBgLayers.append(bgLayer)
+            
             //title
             let titlePosition = CGPoint(x: Double((i * 2 + 1)) * Double(textLayerInterval),
                                         y: Double(self.frame.size.height / 2))
@@ -88,10 +95,19 @@ public class JNDropDownMenu: UIView {
             let title = self.createTextLayer(string: titleString!, color: self.textColor, point: titlePosition)
             self.layer.addSublayer(title)
             tempTitles.append(title)
+            
+            var indicatorPosition = CGPoint(x: 0, y: 0)
+            if arrowPostion == .Right {
+                indicatorPosition = CGPoint(x: titlePosition.x + title.bounds.size.width / 2 + 8,
+                                            y: self.frame.size.height / 2)
+            }
+            else {
+                indicatorPosition = CGPoint(x: titlePosition.x - title.bounds.size.width / 2 - 8,
+                                            y: self.frame.size.height / 2)
+            }
             //indicator
             let indicator = self.createIndicator(color: self.arrowColor,
-                                                 point: CGPoint(x: titlePosition.x + title.bounds.size.width / 2 + 8,
-                                                                y: self.frame.size.height / 2))
+                                                 point: indicatorPosition)
             self.layer.addSublayer(indicator)
             tempIndicators.append(indicator)
         }
