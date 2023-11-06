@@ -6,6 +6,8 @@
 [![Platform](https://img.shields.io/cocoapods/p/JNDropDownMenu.svg?style=flat)](http://cocoapods.org/pods/JNDropDownMenu)
 [![Twitter: @javalnanda](https://img.shields.io/badge/contact-@javalnanda-blue.svg?style=flat)](https://twitter.com/javalnanda)
 
+Please note: This repository is currently unmaintained
+
 ## Overview
 
 Swift version of https://github.com/dopcn/DOPDropDownMenu
